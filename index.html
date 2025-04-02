@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunday Chatbot</title>
+</head>
+<body>
+    <h1>Sunday Chatbot</h1>
+    <input type="text" id="query" placeholder="Ask me anything...">
+    <button onclick="sendMessage()">Send</button>
+    <div id="response"></div>
+
+    <script>
+        async function sendMessage() {
+            const query = document.getElementById('query').value;
+            const responseDiv = document.getElementById('response');
+            
+            // Send query to backend
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query })
+            });
+            
+            const data = await response.json();
+            responseDiv.innerHTML = `<p>${data.message}</p>`;
+        }
+    </script>
+</body>
+</html>
